@@ -1,0 +1,33 @@
+{
+    "name": "astro-simple-carousel",
+    "workspaces": [
+        "demo",
+        "astro-simple-carousel",
+        "astro",
+        "carousel"
+    ],
+    "description": "Astro component to render a simple carousel #withastro",
+    "homepage": "https://github.com/Its-Just-Nans/astro-carousel",
+    "version": "1.0.7",
+    "type": "module",
+    "exports": {
+        ".": "./index.ts",
+        "./astro": "./src/Carousel.astro"
+    },
+    "files": [
+        "src",
+        "index.ts"
+    ],
+    "keywords": [
+        "astro-component",
+        "astro-carousel",
+        "carousel"
+    ],
+    "scripts": {},
+    "license": "MIT",
+    "devDependencies": {
+        "astro": "^4.5.16",
+        "@astrojs/check": "^0.5.10",
+        "typescript": "^5.4.4"
+    }
+}

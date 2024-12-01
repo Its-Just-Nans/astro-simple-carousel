@@ -1,0 +1,119 @@
+---
+interface Props {
+    infinite?: boolean;
+    forcedClass?: string;
+}
+
+const { infinite = false, forcedClass } = Astro.props;
+
+const idGenerator = () => {
+    const S4 = function () {
+        return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+    };
+    return "carousel" + S4() + "-" + S4() + "-" + S4() + "-" + S4();
+};
+
+const carouselClass = forcedClass ?? idGenerator();
+const def = await Astro.slots.render("default");
+if (def) {
+    throw new Error(`Carousel component must be *named* slots, this isn't the case for ${def}`);
+}
+---
+
+<div class="slideshow-container">
+    <div class="carousel-buttons-wrap">
+        <button id={`${carouselClass}-prev`}>&#10094;</button>
+        <button id={`${carouselClass}-next`}>&#10095;</button>
+    </div>
+    {
+        Object.keys(Astro.slots).map(async (slot_name) => {
+            if (slot_name === "default") return;
+            const html = await Astro.slots.render(slot_name);
+            return (
+                <div class={carouselClass}>
+                    <Fragment set:html={html} />
+                </div>
+            );
+        })
+    }
+    <script is:inline define:vars={{ carousel: { infinite, carouselClass, index: 1 } }}>
+        const prev = document.getElementById(`${carousel.carouselClass}-prev`);
+        prev.addEventListener("click", () => {
+            showSlides(-1);
+        });
+        const next = document.getElementById(`${carousel.carouselClass}-next`);
+        next.addEventListener("click", () => {
+            showSlides(1);
+        });
+
+        showSlides(0, carousel.carouselClass);
+
+        function showSlides(n) {
+            carousel.index += n;
+            let x = document.getElementsByClassName(carousel.carouselClass);
+            if (carousel.infinite) {
+                if (carousel.index > x.length) {
+                    carousel.index = 1;
+                } else if (carousel.index < 1) {
+                    carousel.index = x.length;
+                }
+            } else {
+                next.disabled = false;
+                prev.disabled = false;
+                if (carousel.index === 1) {
+                    prev.disabled = true;
+                } else if (carousel.index === x.length) {
+                    next.disabled = true;
+                }
+            }
+            for (let i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+            x[carousel.index - 1].style.display = "block";
+        }
+    </script>
+</div>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+    img {
+        vertical-align: middle;
+    }
+
+    .slideshow-container {
+        max-width: 1000px;
+        position: relative;
+        margin: auto;
+    }
+
+    .prev,
+    .next {
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        width: auto;
+        padding: 16px;
+        margin-top: -22px;
+        color: white;
+        font-weight: bold;
+        font-size: 18px;
+        transition: 0.6s ease;
+        border-radius: 0 3px 3px 0;
+        user-select: none;
+    }
+    .next {
+        right: 0;
+        border-radius: 3px 0 0 3px;
+    }
+
+    .prev:hover,
+    .next:hover {
+        background-color: #f1f1f1;
+        color: black;
+    }
+    .carousel-buttons-wrap {
+        text-align: center;
+    }
+</style>

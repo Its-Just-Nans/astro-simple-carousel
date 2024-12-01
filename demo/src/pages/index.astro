@@ -1,0 +1,59 @@
+---
+import Carousel from "astro-simple-carousel";
+import { Image } from "astro:assets";
+---
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="generator" content={Astro.generator} />
+        <title>astro-simple-carousel</title>
+    </head>
+    <body>
+        <div class="centered">
+            <h1>astro-css-carousel</h1>
+            <a href="https://github.com/Its-Just-Nans/astro-simple-carousel" target="_blank"
+                >https://github.com/Its-Just-Nans/astro-simple-carousel</a
+            >
+            <a href="https://github.com/Its-Just-Nans/astro-simple-carousel" target="_blank"
+                >https://github.com/Its-Just-Nans/astro-simple-carousel</a
+            >
+        </div>
+        <hr />
+        <Carousel>
+            <div slot="1">
+                <p>put whatever you want</p>
+                <img src="https://picsum.photos/200/200?random=1" alt="song" />
+            </div>
+            <Image height={300} width={300} src={"https://picsum.photos/200/200?random=2"} alt="Astro" slot="2" />
+            <div class="styled" slot="3">
+                <img src="https://picsum.photos/200/200?random=4" alt="song" />
+                <p>bring your own style into the carousel element</p>
+            </div>
+            <Image height={300} width={300} src={"https://picsum.photos/200/200?random=3"} alt="Astro" slot="4" />
+        </Carousel>
+        <div class="centered">
+            <h2>Infinite Carousel</h2>
+        </div>
+        <Carousel infinite>
+            <div slot="1">
+                <p>put whatever you want</p>
+                <img src="https://picsum.photos/200/200?random=1" alt="song" />
+            </div>
+            <Image height={300} width={300} src={"https://picsum.photos/200/200?random=3"} alt="Astro" slot="4" />
+        </Carousel>
+    </body>
+</html>
+
+<style>
+    .centered {
+        text-align: center;
+    }
+    .styled {
+        border: 1px solid black;
+        padding: 10px;
+        text-align: center;
+    }
+</style>
