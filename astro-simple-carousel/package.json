@@ -7,8 +7,8 @@
         "carousel"
     ],
     "description": "Astro component to render a simple carousel #withastro",
-    "homepage": "https://github.com/Its-Just-Nans/astro-carousel",
-    "version": "1.0.7",
+    "homepage": "https://github.com/Its-Just-Nans/astro-simpl-carousel",
+    "version": "1.0.8",
     "type": "module",
     "exports": {
         ".": "./index.ts",
